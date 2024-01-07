@@ -36,8 +36,8 @@ public class Solution
     public int[] SmallestTrimmedNumbers(string[] originalInput, int[][] originalQueries)
     {
 
-        Number[] numbers = createNumbers(originalInput);
-        Query[] queries = createQueries(originalQueries);
+        Number[] numbers = CreateNumbers(originalInput);
+        Query[] queries = CreateQueries(originalQueries);
 
         RadixSort radixSort = new RadixSort(numbers);
         Array.Sort(queries, (x, y) => x.trimPositionFromRightToLeft - y.trimPositionFromRightToLeft);
@@ -50,7 +50,7 @@ public class Solution
 
         for (int digitPlace = 1; digitPlace <= maxTrimPositionFromRightToLeft; ++digitPlace)
         {
-            radixSort.sortTillDigitPlaceFromRightToLeft(digitPlace);
+            radixSort.SortTillDigitPlaceFromRightToLeft(digitPlace);
 
             while (indexQueries < queries.Length && digitPlace == queries[indexQueries].trimPositionFromRightToLeft)
             {
@@ -66,7 +66,7 @@ public class Solution
         return indexSmallestTrimmedNumbers;
     }
 
-    private Number[] createNumbers(String[] originalInput)
+    private Number[] CreateNumbers(String[] originalInput)
     {
         Number[] numbers = new Number[originalInput.Length];
         for (int i = 0; i < originalInput.Length; ++i)
@@ -76,7 +76,7 @@ public class Solution
         return numbers;
     }
 
-    private Query[] createQueries(int[][] originalQueries)
+    private Query[] CreateQueries(int[][] originalQueries)
     {
         Query[] queries = new Query[originalQueries.Length];
         for (int i = 0; i < originalQueries.Length; ++i)
@@ -99,7 +99,7 @@ class RadixSort
         this.numbers = numbers;
     }
 
-    public void sortTillDigitPlaceFromRightToLeft(int digitPlace)
+    public void SortTillDigitPlaceFromRightToLeft(int digitPlace)
     {
         int[] frequency = new int[NUMBER_OF_DIGITS];
         foreach (Number n in numbers)
@@ -116,11 +116,11 @@ class RadixSort
         }
 
         Number[] sortedByCurrentDigit = new Number[numbers.Length];
-        fillSortedByCurrentDigit(sortedByCurrentDigit, positionInSortForCurrentDigit, digitPlace);
-        updateNumbers(sortedByCurrentDigit);
+        FillSortedByCurrentDigit(sortedByCurrentDigit, positionInSortForCurrentDigit, digitPlace);
+        UpdateNumbers(sortedByCurrentDigit);
     }
 
-    private void fillSortedByCurrentDigit(Number[] sortedByCurrentDigit, int[] positionInCurrentSort, int digitPlace)
+    private void FillSortedByCurrentDigit(Number[] sortedByCurrentDigit, int[] positionInCurrentSort, int digitPlace)
     {
         for (int i = numbers.Length - 1; i >= 0; --i)
         {
@@ -131,7 +131,7 @@ class RadixSort
         }
     }
 
-    private void updateNumbers(Number[] sortedByCurrentDigit)
+    private void UpdateNumbers(Number[] sortedByCurrentDigit)
     {
         for (int i = 0; i < numbers.Length; ++i)
         {
